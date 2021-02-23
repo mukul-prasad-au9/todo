@@ -12,7 +12,8 @@
             <h1 style="color: aliceblue;">Todo</h1>
           </nav>
           <form class="container justify-content-center d-flex flex-row" action="/todo" method="POST">
-            <input style="height: 20vh;width: 20vw;" class="form-control mt-5" type="text" placeholder="enter task"/>
+            <input style="width: 20vw;" class="form-control mt-5" type="text" name="title" placeholder="enter task"/>
+            <input style="height: 20vh;width: 20vw;" class="form-control mt-5" type="text" name="task" placeholder="enter task"/>
             <div class="mt-5 ml-5">
                 <button class="btn btn-dark mt-5" type="submit">Add</button>
             </div>
@@ -24,9 +25,9 @@
                 <div class="d-flex flex-row flex-wrap">
                 <%for(i=0;i<task.length;i++){%>
                     <%if(task[i].progress=="ongoing"){%>
-                    <div class="card text-center" style="width: 18rem;">
+                    <div class="card text-center mt-4 ml-1" style="width: 18rem;">
                         <div class="card-header"><%=task[i].title%></div>
-                        <div class="card-body"><%=task[i].todo%></div>
+                        <div class="card-body"><%=task[i].task%></div>
                         <div class="card-footer"><button class="btn btn-danger"><%=task[i].progress%></button></div>
                     </div>
                     <%}%>
@@ -40,7 +41,7 @@
                     <%if(task[i].progress=="completed"){%>
                     <div class="card text-center" style="width: 18rem;">
                         <div class="card-header"><%=task[i].title%></div>
-                        <div class="card-body"><%=task[i].todo%></div>
+                        <div class="card-body"><%=task[i].task%></div>
                         <div class="card-footer"><button class="btn btn-success"><%=task[i].progress%></button></div>
                     </div>
                     <%}%>

@@ -1,34 +1,26 @@
-const user = require("../model")
 const express =require("express")
 const router = express.Router()
+const user = require("../db")
 
-task=[{
-    title:"todo",
-    todo:"we have to do it",
-    progress:"ongoing"
-},
-{
-    title:"todo",
-    todo:"we have to do it",
-    progress:"ongoing"
-},
-{
-    title:"todo",
-    todo:"we have to do it",
-    progress:"completed"
-},
-{
-    title:"todo",
-    todo:"we have to do it",
-    progress:"completed"
-}
-]
+
 
 router.get("/todo",(req,res)=>{
-    let color = "primary";
-    res.render("todo",{task,color})
+    user.find({},(err,data)=>{
+        if(err) throw err;
+        res.render("todo",{task:data})
+    })
 })
 
-
+router.post('/todo',(req,res)=>{
+    user.create({
+        title:req.body.title,
+        task:req.body.task,
+        progress:"ongoing"
+    },(err,data)=>{
+        if(err) throw err;
+        res.redirect("/todo")
+    })
+    
+ })
 
 module.exports = router; 

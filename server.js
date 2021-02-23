@@ -1,9 +1,14 @@
 const express  = require("express");
 const cors = require("cors")
 const app = express();
+const bodyParser = require('body-parser');
+
 const route = require("./routes/route")
 
-const port = process.env.PORT|| 6700;
+const port = 7700;
+
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json())
 
 app.use(express.json());
 app.use(cors());
@@ -13,7 +18,7 @@ app.set("views","./view")
 app.set("view engine","ejs")
 
 app.get("/health",(req,res)=>{
-    res.send("health")
+    res.send("health") 
 })
 app.use("/",route)
 

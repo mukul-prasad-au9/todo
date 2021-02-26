@@ -26,7 +26,7 @@
                 <%for(i=0;i<task.length;i++){%>
                     <%if(task[i].progress=="ongoing"){%>
                     <div class="card text-center mt-4 ml-1" style="width: 18rem;">
-                        <div class="card-header"><%=task[i].title%></div>
+                        <div class="card-header"><h1><%=task[i].title%></h1><button id="<%=task[i]._id%>" value="<%=task[i]._id%>" data-toggle="modal" data-target="#Modal" class="edit btn btn-danger">edit</button></div>
                         <div class="card-body"><%=task[i].task%></div>
                         <div class="card-footer"><button class="btn btn-danger"><%=task[i].progress%></button></div>
                     </div>
@@ -49,5 +49,62 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">edit</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="/edit"  id="update">
+                        <input type="text" class="form-control" name="id" id="update_id" readonly/>
+                        <input type="text" class="form control" id="update_title" name="title"/>
+                        <input type="text" class="form control" id="update_task" name="task"/>
+                    </form>
+                  
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="change btn btn-primary">Save changes</button>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <script>
+              $(".edit").on("click",function(){
+                  var value = this.value;
+                  $.ajax({
+                      type:"get",
+                      url:`/todo/${value}`,
+                      success:function(data){
+                          $("#update_title").attr("value",data[0].title);
+                          $("#update_id").attr("value",data[0]._id);
+                          $("#update_task").attr("value",data[0].task);
+                      }
+                  })
+              })
+              $(".change").on("click",function(){
+                  var data = $("#update").serialize()
+                  $.ajax({
+                      type:"put",
+                      url:"/edit",
+                      data:data,
+                      success:function(data){
+                          console.log("changed")
+                          window.location.reload()
+                      },
+                      error:function(error){
+                          alert("invalid")
+                          console.log(error)
+                      }
+                  })
+              })
+              
+          </script>
     </body>
 </html>

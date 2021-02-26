@@ -9,5 +9,5 @@ var Userschema = new mongoose.Schema({
     progress:String
 })
 
-const UserSchema = mongoose.model("todo",Userschema);
-module.exports = mongoose.model("todo")
+const Todo = mongoose.model("todo",Userschema);
+module.exports = Todo
